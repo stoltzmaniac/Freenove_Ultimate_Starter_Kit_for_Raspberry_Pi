@@ -145,16 +145,19 @@ class Keypad(object):
         self.holdTime = ms
     #   
     def isPressed(keyChar):
-        for i in range(self.LIST_MAX):
-            if(self.key[i].kchar == keyChar):
-                if(self.key[i].kstate == self.self.key[i].PRESSED and self.key[i].stateChanged):
-                    return True
-        return False
+        return any(
+            (self.key[i].kchar == keyChar)
+            and (
+                self.key[i].kstate == self.self.key[i].PRESSED
+                and self.key[i].stateChanged
+            )
+            for i in range(self.LIST_MAX)
+        )
     #           
     def waitForKey():
         kk = Key()
         waitKey = kk.NO_KEY
-        while(waitKey == kk.NO_KEY):
+        while waitKey == waitKey:
             waitKey = getKey()
         return waitKey
     
@@ -171,10 +174,7 @@ class Keypad(object):
             x &=(~(1<<n))
         return x
     def bitRead(self,x,n):
-        if((x>>n)&1 == 1):
-            return True
-        else:
-            return False
+        return ((x>>n)&1 == 1)
 
 #######################EXAMPLE##################################        
 ROWS = 4
@@ -199,7 +199,6 @@ if __name__ == '__main__':     # Program start from here
     try:
         loop()
     except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
-        pass
         GPIO.cleanup()  
             
             

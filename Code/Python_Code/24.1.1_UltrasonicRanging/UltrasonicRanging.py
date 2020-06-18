@@ -22,8 +22,7 @@ def pulseIn(pin,level,timeOut): # obtain pulse time of a pin under timeOut
     while(GPIO.input(pin) == level):
         if((time.time() - t0) > timeOut*0.000001):
             return 0;
-    pulseTime = (time.time() - t0)*1000000
-    return pulseTime
+    return (time.time() - t0)*1000000
     
 def getSonar():     # get the measurement results of ultrasonic module,with unit: cm
     GPIO.output(trigPin,GPIO.HIGH)      # make trigPin output 10us HIGH level 

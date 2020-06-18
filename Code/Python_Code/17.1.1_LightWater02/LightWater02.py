@@ -23,7 +23,7 @@ def setup():
     
 # shiftOut function, use bit serial transmission. 
 def shiftOut(dPin,cPin,order,val):
-    for i in range(0,8):
+    for i in range(8):
         GPIO.output(cPin,GPIO.LOW);
         if(order == LSBFIRST):
             GPIO.output(dPin,(0x01&(val>>i)==0x01) and GPIO.HIGH or GPIO.LOW)
@@ -34,14 +34,14 @@ def shiftOut(dPin,cPin,order,val):
 def loop():
     while True:
         x=0x01
-        for i in range(0,8):
+        for _ in range(8):
             GPIO.output(latchPin,GPIO.LOW)  # Output low level to latchPin
             shiftOut(dataPin,clockPin,LSBFIRST,x) # Send serial data to 74HC595
             GPIO.output(latchPin,GPIO.HIGH) # Output high level to latchPin, and 74HC595 will update the data to the parallel output port.
             x<<=1 # make the variable move one bit to left once, then the bright LED move one step to the left once.
             time.sleep(0.1)
         x=0x80
-        for i in range(0,8):
+        for i in range(8):
             GPIO.output(latchPin,GPIO.LOW)
             shiftOut(dataPin,clockPin,LSBFIRST,x)
             GPIO.output(latchPin,GPIO.HIGH)

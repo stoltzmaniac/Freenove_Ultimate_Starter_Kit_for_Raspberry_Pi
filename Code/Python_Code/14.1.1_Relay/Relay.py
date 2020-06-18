@@ -24,21 +24,22 @@ def loop():
     lastButtonState = GPIO.HIGH
     reading = GPIO.HIGH
     while True:
-        reading = GPIO.input(buttonPin)     
+        reading = GPIO.input(buttonPin)
         if reading != lastButtonState :
             lastChangeTime = round(time.time()*1000)
-        if ((round(time.time()*1000) - lastChangeTime) > debounceTime):
-            if reading != buttonState :
-                buttonState = reading;
-                if buttonState == GPIO.LOW:
-                    print("Button is pressed!")
-                    relayState = not relayState
-                    if relayState:
-                        print("Turn on relay ...")
-                    else :
-                        print("Turn off relay ... ")
+        if (
+            (round(time.time() * 1000) - lastChangeTime) > debounceTime
+        ) and reading != buttonState:
+            buttonState = reading;
+            if buttonState == GPIO.LOW:
+                print("Button is pressed!")
+                relayState = not relayState
+                if relayState:
+                    print("Turn on relay ...")
                 else :
-                    print("Button is released!")
+                    print("Turn off relay ... ")
+            else :
+                print("Button is released!")
         GPIO.output(relayPin,relayState)
         lastButtonState = reading # lastButtonState store latest state
     

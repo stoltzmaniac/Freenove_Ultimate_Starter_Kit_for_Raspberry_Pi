@@ -26,7 +26,7 @@ def setup():
     GPIO.setup(clockPin, GPIO.OUT)  # set clockPin to OUTPUT mode
     
 def shiftOut(dPin,cPin,order,val):
-    for i in range(0,8):
+    for i in range(8):
         GPIO.output(cPin,GPIO.LOW);
         if(order == LSBFIRST):
             GPIO.output(dPin,(0x01&(val>>i)==0x01) and GPIO.HIGH or GPIO.LOW)
@@ -49,10 +49,10 @@ def loop():
             index +=1           # move to next 
             if(index > 15):     # index to 0
                 index = 0
-            
-        for i in range(0,64):   # The cycle of PWM is 64 cycles
-            data = 0            
-            for j in range(0,8):    #Calculate the output state of this loop
+
+        for i in range(64):   # The cycle of PWM is 64 cycles
+            data = 0
+            for j in range(8):    #Calculate the output state of this loop
                 if(i < pluseWidth[j+index]):    #Calculate the LED state according to the pulse width 
                     data |= 1<<j    # Calculate the data
             outData(data)           # Send the data to 74HC595

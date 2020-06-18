@@ -4,8 +4,8 @@ from SimplePID import SimplePID
 
 def avg_from_array(a_array):
     sum = 0.0
-    for index in range(0, len(a_array)):
-        sum += a_array[index]
+    for item in a_array:
+        sum += item
 
     return sum/len(a_array)
 

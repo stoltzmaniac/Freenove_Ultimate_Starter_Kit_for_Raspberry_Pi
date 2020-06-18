@@ -28,7 +28,7 @@ def setup():
         GPIO.setup(pin,GPIO.OUT)
     
 def shiftOut(dPin,cPin,order,val):      
-    for i in range(0,8):
+    for i in range(8):
         GPIO.output(cPin,GPIO.LOW);
         if(order == LSBFIRST):
             GPIO.output(dPin,(0x01&(val>>i)==0x01) and GPIO.HIGH or GPIO.LOW)

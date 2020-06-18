@@ -31,7 +31,7 @@ def moveOnePeriod(direction,ms):
         
 # continuous rotation function, the parameter steps specifies the rotation cycles, every four steps is a cycle
 def moveSteps(direction, ms, steps):
-    for i in range(steps):
+    for _ in range(steps):
         moveOnePeriod(direction, ms)
         
 # function used to stop motor

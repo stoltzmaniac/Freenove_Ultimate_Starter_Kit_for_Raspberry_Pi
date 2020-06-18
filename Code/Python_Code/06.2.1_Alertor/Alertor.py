@@ -30,7 +30,7 @@ def loop():
             print ('alertor turned off <<<')
 def alertor():
     p.start(50)
-    for x in range(0,361):      # Make frequency of the alertor consistent with the sine wave 
+    for x in range(361):      # Make frequency of the alertor consistent with the sine wave 
         sinVal = math.sin(x * (math.pi / 180.0))        # calculate the sine value
         toneVal = 2000 + sinVal * 500   # Add to the resonant frequency with a Weighted
         p.ChangeFrequency(toneVal)      # Change Frequency of PWM to toneVal

@@ -61,7 +61,7 @@ class Quaternion:
         self.z = a_z
 
     def get_product(self, a_quat):
-        result = Quaternion(
+        return Quaternion(
             self.w * a_quat.w - self.x * a_quat.x -
             self.y * a_quat.y - self.z * a_quat.z,
 
@@ -73,11 +73,9 @@ class Quaternion:
 
             self.w * a_quat.z + self.x * a_quat.y -
             self.y * a_quat.x + self.z * a_quat.w)
-        return result
 
     def get_conjugate(self):
-        result = Quaternion(self.w, -self.x, -self.y, -self.z)
-        return result
+        return Quaternion(self.w, -self.x, -self.y, -self.z)
 
     def get_magnitude(self):
         return sqrt(self.w * self.w + self.x * self.x + self.y * self.y +

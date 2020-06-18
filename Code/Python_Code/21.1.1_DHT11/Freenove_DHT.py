@@ -35,7 +35,7 @@ class DHT(object):
         GPIO.output(pin,GPIO.HIGH)
         #time.sleep(40*0.000001)
         GPIO.setup(pin,GPIO.IN)
-        
+
         loopCnt = self.DHTLIB_TIMEOUT
         t = time.time()
         while(GPIO.input(pin) == GPIO.LOW):
@@ -47,7 +47,7 @@ class DHT(object):
             if((time.time() - t) > loopCnt):
                 #print ("Echo HIGH")
                 return self.DHTLIB_ERROR_TIMEOUT
-        for i in range(0,40,1):
+        for _ in range(0,40,1):
             t = time.time()
             while(GPIO.input(pin) == GPIO.LOW):
                 if((time.time() - t) > loopCnt):
@@ -64,7 +64,7 @@ class DHT(object):
             mask >>= 1
             if(mask == 0):
                 mask = 0x80
-                idx += 1    
+                idx += 1
         #print (self.bits)
         GPIO.setup(pin,GPIO.OUT)
         GPIO.output(pin,GPIO.HIGH)
@@ -102,7 +102,6 @@ if __name__ == '__main__':
     try:
         loop()
     except KeyboardInterrupt:
-        pass
         exit()      
         
         

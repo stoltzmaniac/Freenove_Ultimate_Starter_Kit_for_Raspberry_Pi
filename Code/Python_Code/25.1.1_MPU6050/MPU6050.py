@@ -138,7 +138,7 @@ class MPU6050:
         # Attempt to bypass adafruit lib
         #a_data_list = self.__mpu.bus.read_i2c_block_data(0x68, a_address, a_length)
         #print('data' + str(a_data_list))
-        for x in range(0, a_length):
+        for x in range(a_length):
             a_data_list[x] = self.__bus.read_byte_data(self.__dev_id,
                                                        a_address + x)
         return a_data_list
@@ -151,7 +151,7 @@ class MPU6050:
 
         # For each a_data_item we want to write it to the board to a certain
         # memory bank and address
-        for i in range(0, a_data_size):
+        for i in range(a_data_size):
             # Write each data to memory
             self.__bus.write_byte_data(self.__dev_id, C.MPU6050_RA_MEM_R_W,
                                        a_data_list[i])
@@ -764,12 +764,10 @@ class MPU6050:
         return (data[0] << 8) | data[1]
 
     def get_FIFO_bytes(self, a_FIFO_count):
-        return_list = list()
-        for index in range(0, a_FIFO_count):
-            return_list.append(
-                self.__bus.read_byte_data(self.__dev_id,
-                                          C.MPU6050_RA_FIFO_R_W))
-        return return_list
+        return [
+            self.__bus.read_byte_data(self.__dev_id, C.MPU6050_RA_FIFO_R_W)
+            for _ in range(a_FIFO_count)
+        ]
 
     def get_int_status(self):
         return self.__bus.read_byte_data(self.__dev_id,
@@ -872,8 +870,8 @@ class MPU6050IRQHandler:
         self.__mpu.dmp_initialize()
         self.__mpu.set_DMP_enabled(True)
         self.__packet_size = self.__mpu.DMP_get_FIFO_packet_size()
-        mpu_int_status = self.__mpu.get_int_status()
         if a_logging:
+            mpu_int_status = self.__mpu.get_int_status()
             self.__start_time = time.clock()
             self.__logging = True
             self.__log_file = open(a_log_file, 'ab')
